@@ -1,17 +1,9 @@
 <script>
+	import MyEdgeFunction from '../api/api';
 	import '../app.css';
 	import { onMount } from 'svelte';
-	const endpoint = 'https://jsonplaceholder.typicode.com/posts';
-	import { getPosts } from '../api/api';
 
-	let posts = [];
-	onMount(async () => {
-		posts = await getPosts();
-	});
+	const a = MyEdgeFunction('https://jsonplaceholder.typicode.com/posts');
 </script>
 
-{#each posts as article}
-	<div>
-		<p>{article.title}</p>
-	</div>
-{/each}
+<h1>Hallo</h1>
