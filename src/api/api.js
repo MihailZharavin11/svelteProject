@@ -2,12 +2,20 @@ export const config = {
 	runtime: 'edge'
 };
 
-async function getPosts() {
-	const res = await fetch('https://jsonplaceholder.typicode.com/posts');
+async function getPosts(url) {
+	const res = await fetch(url);
 	return res.json();
 }
 
-export default function MyEdgeFunction(req) {
-	const data = getPosts();
-	return data;
+export default async function MyEdgeFunction(url, dataLength) {
+	const data = await getPosts(url);
+	return data
+		.map((element) => {
+			return {
+				...element,
+				processedAt: new Date().toLocaleString()
+			};
+		})
+		.filter((element) => element.body.split(' ').length > 20)
+		.slice(0, dataLength);
 }
