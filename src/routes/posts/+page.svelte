@@ -1,7 +1,7 @@
 <script>
 	import MyEdgeFunction from '../../api/api';
-	import Loading from '../Loading/Loading.svelte';
-	import PostItem from '../PostItem/PostItem.svelte';
+	import Loading from '../../components/Loading/Loading.svelte';
+	import PostItem from '../../components/PostItem/PostItem.svelte';
 	import { onMount } from 'svelte';
 
 	let posts = [];
