@@ -1,14 +1,22 @@
 <script>
 	import PostItem from '../../components/PostItem/PostItem.svelte';
 	import axios from 'axios';
-
+	import {invalidate,goto} from '$app/navigation';
 	
 	export let data;
 	let initialValueToSearch = 20;
 	$:({posts} = data);
 	let loading = false;
+	
 
 	
+
+	// const rerunLoadFunction = ()=>{
+	// 	// invalidate('posts')
+	// 	goto(`/posts?param1=${initialValueToSearch}`)
+	// 	initialValueToSearch+=10;
+
+	// }
 
 	const handleClickButton = async () => {
 		if(initialValueToSearch <=100){

@@ -1,17 +1,18 @@
 import axios from 'axios';
-export async function load({ url }) {
+export async function load({ url, depends }) {
 	try {
-		const response = await axios.get('http://127.0.0.1:5173/api/posts?param1=10');
+		const { searchParams } = url;
+		let paramValue = searchParams.get('param1') || 10;
+		const response = await axios.get(`http://127.0.0.1:5173/api/posts?param1=${paramValue}`);
 		const { data } = response;
-		const posts = data
-			.map((element) => {
-				return {
-					...element,
-					processedAt: new Date().toLocaleString()
-				};
-			})
-			.slice(0, 10);
+		const posts = data.map((element) => {
+			return {
+				...element,
+				processedAt: new Date().toLocaleString()
+			};
+		});
 
+		depends('posts');
 		return {
 			posts
 		};
