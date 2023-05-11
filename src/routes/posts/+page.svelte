@@ -1,18 +1,23 @@
 <script>
-	import MyEdgeFunction from '../../api/api';
-	import Loading from '../../components/Loading/Loading.svelte';
 	import PostItem from '../../components/PostItem/PostItem.svelte';
-	import { onMount } from 'svelte';
+	import axios from 'axios';
 
 	
 	export let data;
-	$:({posts} = data)
-	let loading = true;
+	let initialValueToSearch = 20;
+	$:({posts} = data);
+	let loading = false;
 
-	const handleClickButton = () => {
-		if (dataLength < limit && posts[posts.length - 1].id < 100) {
-			dataLength += 10;
-			getDataFromEdgeFunction();
+	
+
+	const handleClickButton = async () => {
+		if(initialValueToSearch <=100){
+			loading = true;
+			const  response = await axios.get(`/api/posts?param1=${initialValueToSearch}`);
+			const {data} = response;
+			posts = data;
+			initialValueToSearch+=10;
+			loading = false;
 		}
 	};
 </script>
@@ -30,7 +35,7 @@
 
 	</div>
 	<button
-		disabled={loading}
+		disabled={loading }
 		on:click={handleClickButton}
 		class="{loading
 			? 'disabled'
