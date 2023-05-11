@@ -4,21 +4,10 @@
 	import PostItem from '../../components/PostItem/PostItem.svelte';
 	import { onMount } from 'svelte';
 
-	let posts = [];
-	let dataLength = 10;
-	const limit = 100;
+	
+	export let data;
+	$:({posts} = data)
 	let loading = true;
-
-	onMount(() => {
-		getDataFromEdgeFunction();
-	});
-
-	const getDataFromEdgeFunction = async () => {
-		loading = true;
-		const data = await MyEdgeFunction('https://jsonplaceholder.typicode.com/posts', dataLength);
-		posts = data;
-		loading = false;
-	};
 
 	const handleClickButton = () => {
 		if (dataLength < limit && posts[posts.length - 1].id < 100) {
@@ -28,13 +17,17 @@
 	};
 </script>
 
-<div class="flex flex-col justify-center">
+<div class="flex flex-col justify-center  ">
+
 	<div
-		class="justify-center px-2 xl:justify-start pt-11 mx-auto max-w-screen-xl flex flex-wrap align-middle gap-9"
+		class="justify-center px-2 xl:justify-start pt-11 mx-auto max-w-screen-xl flex flex-wrap align-middle gap-9 "
 	>
-		{#each posts as item}
-			<PostItem id={item.id} title={item.title} body={item.body} processedAt={item.processedAt} />
+		{#each posts as {id,title,body,processedAt} }
+	
+			<PostItem id={id} title={title} body={body} processedAt={processedAt} />
+
 		{/each}
+
 	</div>
 	<button
 		disabled={loading}
@@ -45,6 +38,7 @@
 	>
 		{loading ? 'Loading...' : 'Load more...'}
 	</button>
+	
 </div>
 
 <style lang="scss">
