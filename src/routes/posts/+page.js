@@ -1,18 +1,12 @@
 import axios from 'axios';
-export async function load({ url, depends }) {
+export async function load({ url }) {
 	try {
 		const { searchParams } = url;
-		let paramValue = searchParams.get('param1') || 10;
-		const response = await axios.get(`http://127.0.0.1:5173/api/posts?param1=${paramValue}`);
+		let initialValueToSkip = searchParams.get('skip') || 0;
+		const response = await axios.get(`http://127.0.0.1:5173/api/posts?skip=${initialValueToSkip}`);
 		const { data } = response;
-		const posts = data.map((element) => {
-			return {
-				...element,
-				processedAt: new Date().toLocaleString()
-			};
-		});
+		const posts = data;
 
-		depends('posts');
 		return {
 			posts
 		};

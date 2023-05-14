@@ -4,27 +4,22 @@
 	import {invalidate,goto} from '$app/navigation';
 	
 	export let data;
-	let initialValueToSearch = 20;
+	let valueToSkip = 10;
 	$:({posts} = data);
 	let loading = false;
 	
 
 	
 
-	// const rerunLoadFunction = ()=>{
-	// 	// invalidate('posts')
-	// 	goto(`/posts?param1=${initialValueToSearch}`)
-	// 	initialValueToSearch+=10;
-
-	// }
+	
 
 	const handleClickButton = async () => {
-		if(initialValueToSearch <=100){
+		if(valueToSkip <=100){
 			loading = true;
-			const  response = await axios.get(`/api/posts?param1=${initialValueToSearch}`);
+			const  response = await axios.get(`/api/posts?skip=${valueToSkip}`);
 			const {data} = response;
-			posts = data;
-			initialValueToSearch+=10;
+			posts = [...posts,...data];
+			valueToSkip+=10;
 			loading = false;
 		}
 	};
