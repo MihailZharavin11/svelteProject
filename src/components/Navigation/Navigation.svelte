@@ -1,5 +1,7 @@
-<nav class="border-2 py-5 px-36 dark:bg-gray-800 dark:border-gray-700">
-	<ul class="flex gap-20 text-white text-base">
+
+
+<nav class="flex self-center">
+	<ul class="flex gap-20 text-white text-base items-center">
 		<li><a class="navigation__link" href="/">Home</a></li>
 		<li><a class="navigation__link" href="/posts">Posts</a></li>
 	</ul>

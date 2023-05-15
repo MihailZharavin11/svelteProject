@@ -1,17 +1,28 @@
 <script>
+	import { getContext } from 'svelte';
 	import PostItem from '../../components/PostItem/PostItem.svelte';
 	import axios from 'axios';
-	import {invalidate,goto} from '$app/navigation';
+	import Modal from '../../components/Modal/Modal.svelte';
+	import AddedPostButton from '../../components/AddedPostButton/AddedPostButton.svelte';
+	import Layout from '../+layout.svelte';
 	
 	export let data;
 	let valueToSkip = 10;
 	$:({posts} = data);
 	let loading = false;
-	
+	let isVisible = false;
 
 	
 
 	
+	const closeModal = ()=>{
+		isVisible = false;
+	}
+
+	const openModal = ()=>{
+		isVisible = true;
+	}
+
 
 	const handleClickButton = async () => {
 		if(valueToSkip <=100){
@@ -25,7 +36,19 @@
 	};
 </script>
 
-<div class="flex flex-col justify-center  ">
+<div class="flex flex-col justify-center">
+
+	<div class="w-full flex justify-center my-10">
+		
+	<AddedPostButton toogleModal={openModal}/>
+	</div>
+
+	{#if isVisible}
+	<Modal on:close={closeModal} />
+	{/if}
+	
+
+
 
 	<div
 		class="justify-center px-2 xl:justify-start pt-11 mx-auto max-w-screen-xl flex flex-wrap align-middle gap-9 "

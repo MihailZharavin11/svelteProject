@@ -17,3 +17,26 @@ export async function GET({ url }) {
 
 	return json(posts);
 }
+
+export async function POST({ request }) {
+	const data = await request.json();
+
+	const post = await db.posts.create({
+		data: {
+			userId: 7,
+			...data
+		}
+	});
+
+	return new Response(
+		JSON.stringify({
+			success: true,
+			data: post
+		}),
+		{
+			headers: {
+				'Content-Type': 'aplication/json'
+			}
+		}
+	);
+}
